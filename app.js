@@ -36,6 +36,9 @@ app.use(cookieParser());
 //routes
 app.use('/user',userRouter);
 app.use('/message',messageRouter);
+app.get('/',(req,res)=>{
+    res.send('Hello World');
+})
 
 const server = app.listen(port,()=>{
     console.log(`Server is running on port ${port} 😎`);
