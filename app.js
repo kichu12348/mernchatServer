@@ -11,7 +11,7 @@ require('dotenv').config();
 //cors
 app.use(cors(
     {
-        origin:"https://kichu12348.github.io",
+        origin:process.env.CLIENT_URL,
         credentials:true
     }
 ));
@@ -24,7 +24,7 @@ const port = process.env.PORT;
 
 //connect to the database
 const {connectDB} = require('./services/connect');
-connectDB("mongodb+srv://kichu12348:tk288174@cluster0.krglllg.mongodb.net/?retryWrites=true&w=majority");
+connectDB(process.env.MONGO_URL);
 
 
 
@@ -47,7 +47,7 @@ const server = app.listen(port,()=>{
 const io = require('socket.io')(server,{
     pingTimeout:60000,
     cors:{
-        origin:"https://kichu12348.github.io",
+        origin:process.env.CLIENT_URL,
     }
 });
 
