@@ -11,7 +11,7 @@ require('dotenv').config();
 //cors
 app.use(cors(
     {
-        origin:"https://kichu12348.github.io/mernchat",
+        origin:"https://kichu12348.github.io",
         credentials:true
     }
 ));
@@ -47,7 +47,7 @@ const server = app.listen(port,()=>{
 const io = require('socket.io')(server,{
     pingTimeout:60000,
     cors:{
-        origin:"https://kichu12348.github.io/mernchat",
+        origin:"https://kichu12348.github.io",
     }
 });
 
