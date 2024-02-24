@@ -121,8 +121,7 @@ async function deleteContact(req,res){
     const roomID = user.contacts.find(contact=>contact.contact===id).roomID;
     await User.findByIdAndUpdate(user._id.toString(),{$pull:{contacts:{contact:id}}});
     await User.findByIdAndUpdate(id,{$pull:{contacts:{contact:user._id.toString()}}});
-    //await Message.deleteMany({roomID});
-    console.log(roomID)
+    await Message.deleteMany({roomID});
     return res.json({response:true, message:'contact deleted successfully'});
 }
   
