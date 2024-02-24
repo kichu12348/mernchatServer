@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Message = require('../models/messages');
 const crypto = require('crypto');
 const {createToken} = require('../services/Auth');
 const fetch = require('isomorphic-fetch');
@@ -112,7 +113,17 @@ async function getContactList(req, res) {
     resposneList.length = 0; //clear the array
     
   }
+
+//delete a contact from the user
+async function deleteContact(req,res){
+    const {id} = req.body;
+    const user = req.user;
+    await User.findByIdAndUpdate(user._id.toString(),{$pull:{contacts:{contact:id}}});
+    await User.findByIdAndUpdate(id,{$pull:{contacts:{contact:user._id.toString()}}});
+    await Message.deleteMany({roomID:{$in:user.contacts.map((contact)=>contact.roomID)}});
+    return res.json({response:true, message:'contact deleted successfully'});
+}
   
 
 
-module.exports = {handleSignUp,handleLogin,getData,queryContact,addContact,getContactList};
+module.exports = {handleSignUp,handleLogin,getData,queryContact,addContact,getContactList,deleteContact};
