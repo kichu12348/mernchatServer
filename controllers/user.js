@@ -118,6 +118,7 @@ async function getContactList(req, res) {
 async function deleteContact(req,res){
     const {id} = req.body;
     const user = req.user;
+    const roomID = user.contacts.find(contact=>contact.contact===id).roomID;
     await User.findByIdAndUpdate(user._id.toString(),{$pull:{contacts:{contact:id}}});
     await User.findByIdAndUpdate(id,{$pull:{contacts:{contact:user._id.toString()}}});
     await Message.deleteMany(roomID);
