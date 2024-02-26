@@ -1,4 +1,5 @@
 const Message = require('../models/messages');
+const bleep = require('../services/censorBleep');
 
 
 async function getMessages(req, res){
@@ -7,16 +8,12 @@ async function getMessages(req, res){
   res.json(messages);
 }
 
-// async function setConnection(req, res){
-//   const {from, message, roomID} = req.body;
-//   const newMessage = await Message.create({from, message, roomID});
-//   res.json(newMessage);
-// }
 
 async function createMessage(req, res){
   const {message, roomID} = req.body;
+  const censoredMsg = await bleep(message);
   const from = req.user._id;
-  const newMessage = await Message.create({from, message, roomID});
+  const newMessage = await Message.create({from, message:censoredMsg, roomID});
   res.json(newMessage);
 }
 
