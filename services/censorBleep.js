@@ -450,13 +450,7 @@ const badWords = [
   "xrated",
   "xxx",
   "niggaaaaaaaaa",
-  "niggaaa",
-  "love",
-  "Love",
-  "LOVE",
-  "lOve",
-  "loVe",
-  "lovE"
+  "niggaaa"
 ];
 
 async function censorWords (inputMsg){
