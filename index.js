@@ -63,9 +63,7 @@ io.on('connection',(socket)=>{
     })
 
     socket.on('message', async (data) => {
-        const roomID = data;
-        const messages = await message.find({ roomID });
-        io.to(roomID).emit('newMessage', messages);
+        io.to(data.roomID).emit('newMessage',data);
       });
 });
 
