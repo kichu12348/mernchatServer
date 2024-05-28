@@ -55,8 +55,8 @@ async function handleLogin(req,res){
     const checkUser = await User.findOne({email});
     if(!checkUser||!checkUser.salt||!checkUser.email) return res.json({response:false, message:'user not found'});
 
-    
-    const hash = await crypto.createHmac('sha512',checkUser.salt).update(password).digest('hex');
+    console.log(checkUser);
+    const hash = crypto.createHmac('sha512',checkUser.salt).update(password).digest('hex');
     if(hash !== checkUser.password) return res.json({response:false, message:'wrong password'});
     const token = await createToken(checkUser._id.toString());
     return res.json({response:true, message:'User logged in successfully',token, name:checkUser.user, email:checkUser.email, profilePic:checkUser.profilePic})
