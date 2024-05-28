@@ -1,4 +1,4 @@
-const censorWord = require('../utils/censorWord');
+const censorWord = require('../services/censorBleep');
 
 
 const handleSocket = (socket) => {
@@ -11,10 +11,14 @@ const handleSocket = (socket) => {
         socket.join(roomID);
     })
 
-    socket.on('message', async (data) => {
-        const roomID = data;
-        const messages = await message.find({ roomID });
-        io.to(roomID).emit('newMessage', messages);
+    socket.on('message', async ({message,roomID,from}) => {
+        const newData = {
+            message:await censorWord(message),
+            from,
+            roomID
+        }
+
+        socket.to(roomID).emit('newMessage',newData);
       });
 }
 
