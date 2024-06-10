@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const secret = "hsdvfihsgdhucgsduycgswdygcsdcv";
+const secret = process.env.SECRET_CODE
 const User = require('../models/user');
 
 async function createToken(id){
