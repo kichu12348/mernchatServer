@@ -1,10 +1,12 @@
 const censorWord = require('../services/censorBleep');
 
 
-const handleSocket = (socket) => {
-    socket.on('setup',(userData)=>{
-        socket.join(userData);
-        socket.emit('connected');
+const handleSocket = (io) => {
+    io.on('connection',socket=>{
+
+
+    socket.on('setup',({userId})=>{
+        socket.join(userId);
     })
 
     socket.on('joinRoom',(roomID)=>{
@@ -18,8 +20,23 @@ const handleSocket = (socket) => {
             roomID
         }
 
-        socket.to(roomID).emit('newMessage',newData);
+        io.to(roomID).emit('newMessage',newData);
       });
+      
+      
+      
+      socket.on('contactAdded',({id,userData})=>{
+        io.to(id).emit('newContact',userData);
+    })
+
+    socket.on('contactDeleted',({id,userId,name})=>{
+        io.to(id).emit('deleteContact',{userId,name});
+    })
+
+    })
+
+
+    
 }
 
 module.exports = {handleSocket};

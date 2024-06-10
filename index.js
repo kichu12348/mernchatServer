@@ -13,7 +13,7 @@ require('dotenv').config();
 app.use(cors(
     {
         origin:process.env.CLIENT_URL,
-        credentials:true
+        credentials:true,
     }
 ));
 
@@ -52,5 +52,5 @@ const io = require('socket.io')(server,{
     }
 });
 
-io.on('connection',handleSocket);
+handleSocket(io);
 
